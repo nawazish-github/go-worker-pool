@@ -1,7 +1,7 @@
 package pool
 
 import (
-	"sync"
+	"fmt"
 	"sync/atomic"
 
 	"github.com/nawazish-github/go-worker-pool/runnable"
@@ -23,7 +23,7 @@ func New(numWrkrs int32) Pool {
 	}
 
 	for i := 0; i < int(numWrkrs); i++ {
-		go p.workerStart()
+		go p.workerStart(i)
 	}
 	return p
 }
@@ -35,15 +35,18 @@ func (p *poolImpl) Shutdown() {
 	for i := 0; i < int(n); i++ {
 		p.exit <- struct{}{}
 	}
+	fmt.Println("shut down complete. free workers: ", atomic.LoadInt32(&p.freeWrkrs))
 }
 
-func (p *poolImpl) workerStart() {
+func (p *poolImpl) workerStart(id int) {
 	for {
 		select {
 		case <-p.exit:
+			atomic.AddInt32(&p.freeWrkrs, -1)
 			return
 		case w := <-p.runnableCh:
 			atomic.AddInt32(&p.freeWrkrs, -1)
+			fmt.Printf("go-routine id: %d ", id)
 			w.Run()
 			atomic.AddInt32(&p.freeWrkrs, 1)
 		}
