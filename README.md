@@ -1,4 +1,4 @@
-#GO-WORKER-POOL
+#GO-WORKER-POOL [![Hits](https://hits.sh/github.com/nawazish-github/go-worker-pool.svg)](https://hits.sh/github.com/nawazish-github/go-worker-pool/)
 
 ##Philosophy
 
@@ -21,7 +21,7 @@ The public APIs are available to create, submit tasks and shutdown the pool.
 import (
 	"fmt"
 	"time"
-    
+
     "github.com/nawazish-github/go-worker-pool/pool"
 )
 
