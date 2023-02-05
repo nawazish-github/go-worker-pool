@@ -13,6 +13,7 @@ type task struct {
 
 func (t *task) Run() {
 	fmt.Println(t.name)
+	time.Sleep(time.Millisecond * 500)
 }
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 	for i := 0; i < 10; i++ {
 		p.Submit(&task{name: names[i]})
 	}
-	p.Shutdown()
+	go p.Shutdown()
+	go p.Submit(&task{name: "bad task"})
 	time.Sleep(time.Second * 5)
 }
