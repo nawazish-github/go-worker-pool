@@ -44,3 +44,11 @@ func main() {
 	time.Sleep(time.Second * 5)
 }
 ```
+
+###Pending Enhancements
+The following features might be added in future to enhance this pool.
+
+1. Lazy creation of Go-routines
+2. Result oriented task execution
+3. Handling tasks that might panic at runtime and crash the Go-routine
+4. Priority tasks - if a task if annotated as important then they should be preferred to be scheduled ahead of other pending tasks
