@@ -22,7 +22,6 @@ func main() {
 	for i := 0; i < 10; i++ {
 		p.Submit(&task{name: names[i]})
 	}
-	go p.Shutdown()
-	go p.Submit(&task{name: "bad task"})
+    p.Shutdown()
 	time.Sleep(time.Second * 5)
 }
